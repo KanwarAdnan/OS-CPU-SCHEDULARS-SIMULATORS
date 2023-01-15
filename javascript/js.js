@@ -1,4 +1,5 @@
 // Code By Kanwar Adnan
+
 var id = 1;
 
 class ProcessModelResponse {
@@ -13,36 +14,6 @@ class ProcessModelResponse {
       this.waiting_time = 0;
    }
 }
-
-
-class FCFS {
-   constructor() {}
-   static execute(processes) {
-      let sorted_processes = processes.sort((a, b) => a.arrival_time - b.arrival_time);
-      let executed_processes = [];
-      let current_time = sorted_processes[0].arrival_time;
-      for (let i = 0; i < sorted_processes.length; i++) {
-         let process = sorted_processes[i];
-         let name = process.name;
-         let arrival_time = process.arrival_time;
-         let burst_time = process.burst_time;
-         let response_time = current_time;
-         let finish_time = current_time + process.burst_time;
-         let turn_around_time = finish_time - arrival_time;
-         let waiting_time = turn_around_time - burst_time;
-         current_time = current_time + burst_time;
-         let response_object = new ProcessModelResponse(name, arrival_time, burst_time);
-         response_object.response_time = response_time;
-         response_object.finish_time = finish_time;
-         response_object.turn_around_time = turn_around_time;
-         response_object.waiting_time = waiting_time;
-         executed_processes.push(response_object);
-      }
-      executed_processes.sort((a, b) => a.name.localeCompare(b.name));
-      return executed_processes;
-   }
-}
-
 
 function getJobsAt(arrivalTime, sortedProcesses) {
    let jobs = [];
@@ -81,10 +52,34 @@ class ReadyQueue {
    }
 }
 
-class SRTF {
-   constructor() {}
+class Schedular {
 
-   static execute(interval, processes) {
+   static FCFS(processes) {
+      let sorted_processes = processes.sort((a, b) => a.arrival_time - b.arrival_time);
+      let executed_processes = [];
+      let current_time = sorted_processes[0].arrival_time;
+      for (let i = 0; i < sorted_processes.length; i++) {
+         let process = sorted_processes[i];
+         let name = process.name;
+         let arrival_time = process.arrival_time;
+         let burst_time = process.burst_time;
+         let response_time = current_time;
+         let finish_time = current_time + process.burst_time;
+         let turn_around_time = finish_time - arrival_time;
+         let waiting_time = turn_around_time - burst_time;
+         current_time = current_time + burst_time;
+         let response_object = new ProcessModelResponse(name, arrival_time, burst_time);
+         response_object.response_time = response_time;
+         response_object.finish_time = finish_time;
+         response_object.turn_around_time = turn_around_time;
+         response_object.waiting_time = waiting_time;
+         executed_processes.push(response_object);
+      }
+      executed_processes.sort((a, b) => a.name.localeCompare(b.name));
+      return executed_processes;
+   }
+
+   static SRTF(interval, processes) {
       let sorted_processes = processes.sort((a, b) => a.arrival_time - b.arrival_time);
       let ready_queue = new ReadyQueue();
       let current_time = sorted_processes[0].arrival_time;
@@ -111,10 +106,8 @@ class SRTF {
       let result = executed_processes.sort((a, b) => a.name.localeCompare(b.name));
       return result;
    }
-}
 
-class SJF {
-   static execute(processes) {
+   static SJF(processes) {
       let sortedProcesses = processes.sort((a, b) => a.arrival_time - b.arrival_time);
       let readyQueue = new ReadyQueue();
       let currentTime = sortedProcesses[0].arrival_time;
@@ -140,6 +133,7 @@ class SJF {
       }
       return executed_processes.sort((a, b) => a.name.localeCompare(b.name));
    }
+
 }
 
 function validate_fields() {
@@ -186,19 +180,19 @@ function calculate_fcfs_and_update_table() {
       // determine algo
       const algo = document.getElementById("algorithm-select").value;
       if (algo == "fcfs") {
-         let executed_processes = FCFS.execute(data);
+         let executed_processes = Schedular.FCFS(data);
          for (let i = 0; i < executed_processes.length; i++) {
             add_row_to_table(executed_processes[i]);
          }
       }
       if (algo == "sjf") {
-         let executed_processes = SJF.execute(data);
+         let executed_processes = Schedular.SJF(data);
          for (let i = 0; i < executed_processes.length; i++) {
             add_row_to_table(executed_processes[i]);
          }
       }
       if (algo == "srtf") {
-         let executed_processes = SRTF.execute(1, data);
+         let executed_processes = Schedular.SRTF(1, data);
          for (let i = 0; i < executed_processes.length; i++) {
             add_row_to_table(executed_processes[i]);
          }
