@@ -1,0 +1,63 @@
+<! -- Code By Kanwar Adnan -->
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	  <link rel="stylesheet" href="css\css.css">
+      <title>CPU SCHEDULING SIMULATOR</title>
+	  <script src="javascript\js.js"></script>
+   </head>
+   <body>
+      <div id="header" class="container-fluid text-center">CPU SCHEDULING SIMULATORS BY KANWAR ADNAN</div>
+		<div class="form-group">
+		  <label for="algorithm-select",id="label_1">Algorithms</label>
+		  <select class="form-control" id="algorithm-select">
+			<option value="fcfs">FCFS</option>
+			<option value="sjf">SJF</option>
+			<option value="srtf">SRTF</option>
+		  </select>
+		</div>
+      <div class="container-fluid">
+        <div class="row">
+            <div id="div_processes" class="col-sm-12"></div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+				<button id="add-process-button" class="btn btn-success" onclick="add_process()">ADD PROCESS</button>
+                <button id="del-process-button" class="btn btn-danger" onclick="del_process()">DEL PROCESS</button>
+                <button id="clear-process-button" class="btn btn-danger" onclick="clear_process()">CLEAR ALL</button>
+                <button id="calculate-process-button" class="btn btn-primary" onclick="calculate_fcfs_and_update_table()">CALCULATE</button>
+            </div>
+        </div>
+      </div>
+      <br><br>
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="process-table" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Process Name</th>
+                            <th>A.T</th>
+                            <th>B.T</th>
+                            <th>R.T</th>
+                            <th>F.T</th>
+                            <th>T.A.T</th>
+                            <th>W.T</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+   </body>
+   <script>
+	document.getElementById("process-table").style.visibility = "hidden";
+    add_process();
+   </script>
+</html>
