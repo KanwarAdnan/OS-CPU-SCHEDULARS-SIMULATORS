@@ -10,3 +10,5 @@ Currently Supported:
   3) SRTF
 
   Others will be updated soon.
+
+# Link : https://kanwaradnan.github.io/OS-CPU-SCHEDULARS-SIMULATORS/
